@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-inter bg-white text-dark transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-montserrat font-bold;
+}
+
+/* Dark mode color overrides */
+.dark .bg-light {
+  @apply bg-gray-800;
+}
+
+.dark .bg-white {
+  @apply bg-gray-900;
+}
+
+.dark .text-dark {
+  @apply text-gray-100;
+}
+
+.dark .text-gray-700 {
+  @apply text-gray-300;
+}
+
+.dark .border-gray-300 {
+  @apply border-gray-600;
+}
