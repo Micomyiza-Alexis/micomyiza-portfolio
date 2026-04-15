@@ -109,5 +109,5 @@ MIT License - feel free to use this template for your own portfolio!
 ## Contact
 
 - Email: micomyizaa742@gmail.com
-- GitHub: [micomyizaalex](https://github.com/micomyizaalex)
+- GitHub: [micomyizaalex](https://github.com/Micomyiza-Alexis)
 - LinkedIn: [micomyizaalex](https://linkedin.com/in/micomyizaalex)

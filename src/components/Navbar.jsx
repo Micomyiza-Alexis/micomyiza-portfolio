@@ -1,19 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ThemeContext } from '../App';
+import { Bars3Icon, XMarkIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
+// ========================================
+// NAVBAR LINK COMPONENT
+// ========================================
+const NavLink = ({ name, href, isActive, onClick }) => (
+  <motion.a
+    href={href}
+    onClick={onClick}
+    whileHover={{ color: '#3b82f6' }}
+    className="relative text-gray-300 text-sm font-medium transition-colors group"
+  >
+    {name}
+    <motion.div
+      className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400"
+      initial={{ width: 0 }}
+      animate={{ width: isActive ? '100%' : 0 }}
+      transition={{ duration: 0.3 }}
+    />
+  </motion.a>
+);
+
+// ========================================
+// MAIN NAVBAR COMPONENT
+// ========================================
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [activeSection, setActiveSection] = useState('home');
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -23,6 +38,35 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  // Handle scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 30);
+
+      // Detect active section
+      const sections = navLinks.map(link => link.href.slice(1));
+      for (let section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNavClick = (href) => {
+    setMobileMenuOpen(false);
+    const sectionId = href.slice(1);
+    setActiveSection(sectionId);
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -30,194 +74,138 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? darkMode
-            ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg shadow-gray-800/50'
-            : 'bg-white/95 backdrop-blur-sm shadow-lg'
+          ? 'bg-gray-900/40 backdrop-blur-xl border-b border-white/5 shadow-2xl'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+          
+          {/* LOGO - Compact */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-primary"
+            whileTap={{ scale: 0.95 }}
+            className="flex-shrink-0"
           >
-            MA
+            <a href="#home" className="flex items-center gap-2.5">
+              <div className="w-9 h-9 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <span className="text-white font-bold text-sm">MA</span>
+              </div>
+              <span className="hidden sm:inline text-white font-bold text-sm">
+                Alexis
+              </span>
+            </a>
           </motion.div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* DESKTOP NAVIGATION */}
+          <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
-              <motion.a
+              <NavLink
                 key={link.name}
+                name={link.name}
                 href={link.href}
-                whileHover={{ scale: 1.1 }}
-                className={`${
-                  darkMode ? 'text-gray-100' : 'text-dark'
-                } hover:text-primary transition-colors duration-300`}
-              >
-                {link.name}
-              </motion.a>
+                isActive={activeSection === link.href.slice(1)}
+                onClick={() => handleNavClick(link.href)}
+              />
             ))}
-            
-            {/* Dark Mode Toggle - Desktop */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 10 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={toggleDarkMode}
-              className={`p-2 rounded-xl transition-all duration-300 ${
-                darkMode
-                  ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700 shadow-lg'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-md'
-              }`}
-              aria-label="Toggle dark mode"
-            >
-              <AnimatePresence mode="wait">
-                {darkMode ? (
-                  <motion.svg
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                      clipRule="evenodd"
-                    />
-                  </motion.svg>
-                ) : (
-                  <motion.svg
-                    key="moon"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </motion.svg>
-                )}
-              </AnimatePresence>
-            </motion.button>
           </div>
 
-          {/* Mobile Menu & Theme Toggle */}
-          <div className="md:hidden flex items-center gap-3">
-            {/* Dark Mode Toggle - Mobile */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={toggleDarkMode}
-              className={`p-2 rounded-xl transition-all duration-300 ${
-                darkMode
-                  ? 'bg-gray-800 text-yellow-400 shadow-lg'
-                  : 'bg-gray-100 text-gray-700 shadow-md'
-              }`}
-              aria-label="Toggle dark mode"
+          {/* CTA BUTTON (Desktop) */}
+          <div className="hidden md:block">
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleNavClick('#contact')}
+              className="group relative"
             >
-              <AnimatePresence mode="wait">
-                {darkMode ? (
-                  <motion.svg
-                    key="sun-mobile"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                      clipRule="evenodd"
-                    />
-                  </motion.svg>
-                ) : (
-                  <motion.svg
-                    key="moon-mobile"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </motion.svg>
-                )}
-              </AnimatePresence>
-            </motion.button>
-            
-            {/* Mobile Menu Button */}
-            <button
-              className={`transition-colors ${
-                darkMode ? 'text-gray-100' : 'text-dark'
-              }`}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-            </button>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity" />
+              <div className="relative flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white text-sm">
+                <span>Let's Talk</span>
+                <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </motion.a>
           </div>
+
+          {/* MOBILE MENU BUTTON */}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+            aria-label="Toggle menu"
+          >
+            <AnimatePresence mode="wait">
+              {mobileMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <XMarkIcon className="w-6 h-6" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="open"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Bars3Icon className="w-6 h-6" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: 'auto' }}
-            exit={{ opacity: 0, y: -20, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className={`md:hidden shadow-lg overflow-hidden ${
-              darkMode ? 'bg-gray-900/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'
-            }`}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden border-t border-white/10 bg-gray-900/50 backdrop-blur-xl"
           >
-            {navLinks.map((link, index) => (
+            <div className="px-4 py-6 space-y-3">
+              {navLinks.map((link, index) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className={`block px-4 py-2.5 rounded-lg font-medium text-sm transition-all ${
+                    activeSection === link.href.slice(1)
+                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/30'
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+              
+              {/* CTA Button (Mobile) */}
               <motion.a
-                key={link.name}
-                href={link.href}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`block px-6 py-4 transition-colors border-b last:border-b-0 ${
-                  darkMode
-                    ? 'text-gray-100 hover:bg-gray-800 hover:text-primary border-gray-700'
-                    : 'text-dark hover:bg-light hover:text-primary border-gray-200'
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
+                href="#contact"
+                onClick={() => handleNavClick('#contact')}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.05 }}
+                className="group relative block mt-4 pt-3 border-t border-white/10"
               >
-                {link.name}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity" />
+                <div className="relative flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white text-sm">
+                  <span>Let's Talk</span>
+                  <ArrowRightIcon className="w-3.5 h-3.5" />
+                </div>
               </motion.a>
-            ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
