@@ -1,3 +1,4 @@
+import profilePicture from "./image/WhatsApp Image 2025-11-17 at 11.24.15_9e4723c8.jpg";
 // ========================================
 // PERSONAL INFORMATION
 // ========================================
@@ -9,8 +10,7 @@ export const personalInfo = {
 
   bio: "IT student and developer focused on building modern, responsive web applications and solving real-world problems through technology.",
 
-  profilePicture:
-    "/src/image/WhatsApp Image 2025-11-17 at 11.24.15_9e4723c8.jpg",
+  profilePicture,
 
   email: "micomyizaa742@gmail.com",
 
