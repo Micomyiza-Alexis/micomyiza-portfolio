@@ -1,215 +1,283 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bars3Icon, XMarkIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ArrowUpRightIcon,
+} from '@heroicons/react/24/outline';
 
-// ========================================
-// NAVBAR LINK COMPONENT
-// ========================================
-const NavLink = ({ name, href, isActive, onClick }) => (
-  <motion.a
-    href={href}
-    onClick={onClick}
-    whileHover={{ color: '#3b82f6' }}
-    className="relative text-gray-300 text-sm font-medium transition-colors group"
-  >
-    {name}
-    <motion.div
-      className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400"
-      initial={{ width: 0 }}
-      animate={{ width: isActive ? '100%' : 0 }}
-      transition={{ duration: 0.3 }}
-    />
-  </motion.a>
-);
+const navLinks = [
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Contact', href: '#contact' },
+];
 
-// ========================================
-// MAIN NAVBAR COMPONENT
-// ========================================
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
-  // Handle scroll detection
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 40);
 
-      // Detect active section
-      const sections = navLinks.map(link => link.href.slice(1));
-      for (let section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section);
-            break;
-          }
+      const sections = navLinks
+        .map((link) => link.href.replace('#', ''))
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+
+      let current = 'home';
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= 180 && rect.bottom >= 180) {
+          current = section.id;
         }
-      }
+      });
+
+      setActiveSection(current);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const handleNavClick = (href) => {
-    setMobileMenuOpen(false);
-    const sectionId = href.slice(1);
-    setActiveSection(sectionId);
+  const handleClick = (href) => {
+    setMobileOpen(false);
+
+    const id = href.replace('#', '');
+    setActiveSection(id);
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-gray-900/40 backdrop-blur-xl border-b border-white/5 shadow-2xl'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          
-          {/* LOGO - Compact */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex-shrink-0"
-          >
-            <a href="#home" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/30">
-                <span className="text-white font-bold text-sm">MA</span>
-              </div>
-              <span className="hidden sm:inline text-white font-bold text-sm">
-                Alexis
-              </span>
-            </a>
-          </motion.div>
-
-          {/* DESKTOP NAVIGATION */}
-          <div className="hidden md:flex items-center gap-12">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                name={link.name}
-                href={link.href}
-                isActive={activeSection === link.href.slice(1)}
-                onClick={() => handleNavClick(link.href)}
-              />
-            ))}
-          </div>
-
-          {/* CTA BUTTON (Desktop) */}
-          <div className="hidden md:block">
+    <>
+      {/* NAVBAR */}
+      <motion.header
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6"
+      >
+        <nav
+          className={`
+            mx-auto max-w-6xl
+            transition-all duration-500
+            ${
+              scrolled
+                ? 'rounded-2xl border border-white/[0.08] bg-[#080b12]/85 shadow-2xl shadow-black/20 backdrop-blur-2xl'
+                : 'rounded-2xl border border-transparent bg-transparent'
+            }
+          `}
+        >
+          <div className="flex h-[68px] items-center justify-between px-4 sm:px-5">
+            
+            {/* LOGO */}
             <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleNavClick('#contact')}
-              className="group relative"
+              href="#home"
+              onClick={() => handleClick('#home')}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              className="group flex items-center gap-3"
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity" />
-              <div className="relative flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white text-sm">
-                <span>Let's Talk</span>
-                <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-white text-sm font-black text-[#080b12]">
+                <span>MA</span>
+
+                <div className="absolute inset-0 -translate-x-full bg-blue-400/40 transition-transform duration-500 group-hover:translate-x-full" />
+              </div>
+
+              <div className="hidden sm:block">
+                <p className="text-sm font-bold tracking-tight text-white">
+                  Micomyiza Alexis
+                </p>
+
+                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500">
+                  Developer
+                </p>
               </div>
             </motion.a>
+
+            {/* DESKTOP NAV */}
+            <div className="hidden items-center gap-1 md:flex">
+              {navLinks.map((link) => {
+                const id = link.href.replace('#', '');
+                const active = activeSection === id;
+
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => handleClick(link.href)}
+                    className="relative rounded-xl px-4 py-2 text-sm font-medium transition-colors"
+                  >
+                    {active && (
+                      <motion.div
+                        layoutId="activeNav"
+                        className="absolute inset-0 rounded-xl bg-white/[0.07]"
+                        transition={{
+                          type: 'spring',
+                          stiffness: 400,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+
+                    <span
+                      className={`relative z-10 transition-colors ${
+                        active
+                          ? 'text-white'
+                          : 'text-gray-500 hover:text-gray-200'
+                      }`}
+                    >
+                      {link.name}
+                    </span>
+
+                    {active && (
+                      <motion.span
+                        layoutId="activeDot"
+                        className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-blue-400"
+                      />
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* DESKTOP CTA */}
+            <motion.a
+              href="#contact"
+              onClick={() => handleClick('#contact')}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group hidden items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-[#080b12] transition hover:bg-blue-50 md:flex"
+            >
+              Let's talk
+
+              <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </motion.a>
+
+            {/* MOBILE BUTTON */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setMobileOpen((value) => !value)}
+              aria-label="Toggle navigation"
+              aria-expanded={mobileOpen}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-gray-300 transition hover:bg-white/[0.08] hover:text-white md:hidden"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {mobileOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ opacity: 0, rotate: -90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: 90 }}
+                  >
+                    <XMarkIcon className="h-5 w-5" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ opacity: 0, rotate: 90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: -90 }}
+                  >
+                    <Bars3Icon className="h-5 w-5" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
           </div>
 
-          {/* MOBILE MENU BUTTON */}
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
-            aria-label="Toggle menu"
-          >
-            <AnimatePresence mode="wait">
-              {mobileMenuOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <XMarkIcon className="w-6 h-6" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="open"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Bars3Icon className="w-6 h-6" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
-        </div>
-      </div>
-
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden border-t border-white/10 bg-gray-900/50 backdrop-blur-xl"
-          >
-            <div className="px-4 py-6 space-y-3">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className={`block px-4 py-2.5 rounded-lg font-medium text-sm transition-all ${
-                    activeSection === link.href.slice(1)
-                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border border-blue-500/30'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-              
-              {/* CTA Button (Mobile) */}
-              <motion.a
-                href="#contact"
-                onClick={() => handleNavClick('#contact')}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.05 }}
-                className="group relative block mt-4 pt-3 border-t border-white/10"
+          {/* MOBILE MENU */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{
+                  duration: 0.25,
+                  ease: 'easeOut',
+                }}
+                className="overflow-hidden border-t border-white/[0.06] md:hidden"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity" />
-                <div className="relative flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white text-sm">
-                  <span>Let's Talk</span>
-                  <ArrowRightIcon className="w-3.5 h-3.5" />
+                <div className="space-y-1 p-3">
+                  {navLinks.map((link, index) => {
+                    const id = link.href.replace('#', '');
+                    const active = activeSection === id;
+
+                    return (
+                      <motion.a
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => handleClick(link.href)}
+                        initial={{
+                          opacity: 0,
+                          x: -10,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                        }}
+                        transition={{
+                          delay: index * 0.04,
+                        }}
+                        className={`
+                          flex items-center justify-between
+                          rounded-xl px-4 py-3
+                          text-sm font-medium
+                          transition-all
+                          ${
+                            active
+                              ? 'bg-white/[0.07] text-white'
+                              : 'text-gray-400 hover:bg-white/[0.04] hover:text-white'
+                          }
+                        `}
+                      >
+                        <span>{link.name}</span>
+
+                        {active && (
+                          <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                        )}
+                      </motion.a>
+                    );
+                  })}
+
+                  <motion.a
+                    href="#contact"
+                    onClick={() => handleClick('#contact')}
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    transition={{
+                      delay: navLinks.length * 0.04,
+                    }}
+                    className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#080b12]"
+                  >
+                    Let's talk
+                    <ArrowUpRightIcon className="h-4 w-4" />
+                  </motion.a>
                 </div>
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+      </motion.header>
+    </>
   );
 };
 

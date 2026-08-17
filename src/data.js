@@ -1,107 +1,701 @@
+// ========================================
+// PERSONAL INFORMATION
+// ========================================
+
 export const personalInfo = {
   name: "Micomyiza Alexis",
-  jobTitle: "Frontend Developer | UI/UX Designer | Problem Solver",
-  bio: "I am a passionate developer building web applications and solving problems through technology.",
-  profilePicture: "/src/image/WhatsApp Image 2025-11-17 at 11.24.15_9e4723c8.jpg",
+
+  jobTitle: "Frontend Developer | UI/UX Designer | Full-Stack Developer",
+
+  bio: "IT student and developer focused on building modern, responsive web applications and solving real-world problems through technology.",
+
+  profilePicture:
+    "/src/image/WhatsApp Image 2025-11-17 at 11.24.15_9e4723c8.jpg",
+
   email: "micomyizaa742@gmail.com",
+
   phone: "0793216602",
+
   github: "https://github.com/Micomyiza-Alexis",
+
   linkedin: "https://linkedin.com/in/micomyizaalex",
-  location: "Rwanda, Africa"
+
+  location: "Rwanda, Africa",
 };
+
+
+// ========================================
+// SKILLS
+// ========================================
 
 export const skillsData = {
   frontend: [
-    { name: "React.js", level: 95, description: "Component architecture, hooks, state management" },
-    { name: "Next.js", level: 85, description: "SSR, SSG, API routes, optimization" },
-    { name: "TypeScript", level: 80, description: "Type safety, interfaces, generics" },
-    { name: "Tailwind CSS", level: 95, description: "Utility-first, responsive design, custom configs" },
-    { name: "Framer Motion", level: 90, description: "Animations, transitions, advanced motion" },
-    { name: "HTML/CSS", level: 98, description: "Semantic HTML, accessibility, modern CSS" },
+    {
+      name: "React.js",
+      level: 85,
+      description:
+        "Component architecture, hooks, state management, and reusable UI development",
+    },
+    {
+      name: "Next.js",
+      level: 80,
+      description:
+        "Server-side rendering, routing, API routes, and production web applications",
+    },
+    {
+      name: "TypeScript",
+      level: 75,
+      description:
+        "Type-safe development, interfaces, types, and reusable application logic",
+    },
+    {
+      name: "Tailwind CSS",
+      level: 90,
+      description:
+        "Responsive layouts, utility-first styling, and modern UI implementation",
+    },
+    {
+      name: "Framer Motion",
+      level: 80,
+      description:
+        "Animations, transitions, interactive interfaces, and motion effects",
+    },
+    {
+      name: "HTML/CSS",
+      level: 95,
+      description:
+        "Semantic HTML, responsive design, accessibility, and modern CSS",
+    },
   ],
+
   backend: [
-    { name: "Node.js", level: 80, description: "Express, async/await, RESTful APIs" },
-    { name: "PHP", level: 75, description: "Backend logic, database operations" },
-    { name: "Python", level: 70, description: "Scripting, automation, data processing" },
-    { name: "Java", level: 65, description: "OOP principles, basic backend logic" },
+    {
+      name: "Node.js",
+      level: 75,
+      description:
+        "REST APIs, Express, asynchronous programming, and backend services",
+    },
+    {
+      name: "PHP",
+      level: 65,
+      description:
+        "Backend logic, server-side development, and database operations",
+    },
+    {
+      name: "Python",
+      level: 65,
+      description:
+        "Scripting, automation, backend fundamentals, and data processing",
+    },
+    {
+      name: "Java",
+      level: 60,
+      description:
+        "Object-oriented programming and backend development fundamentals",
+    },
   ],
+
   tools: [
-    { name: "Git/GitHub", level: 95, description: "Version control, collaboration, CI/CD" },
-    { name: "Figma", level: 85, description: "UI design, prototyping, design systems" },
-    { name: "VS Code", level: 98, description: "Editor, extensions, productivity" },
-    { name: "Supabase", level: 80, description: "Database, authentication, real-time" },
+    {
+      name: "Git/GitHub",
+      level: 90,
+      description:
+        "Version control, branching, pull requests, collaboration, and project workflows",
+    },
+    {
+      name: "Figma",
+      level: 85,
+      description:
+        "UI design, wireframes, prototypes, and design-to-development workflows",
+    },
+    {
+      name: "VS Code",
+      level: 95,
+      description:
+        "Development environment, extensions, debugging, and productivity",
+    },
+    {
+      name: "Vercel",
+      level: 75,
+      description:
+        "Deployment and hosting of modern frontend and Next.js applications",
+    },
+    {
+      name: "Docker",
+      level: 55,
+      description:
+        "Containerization fundamentals and development environments",
+    },
   ],
+
   database: [
-    { name: "SQL/MySQL", level: 80, description: "Queries, optimization, relationships" },
-    { name: "Supabase", level: 80, description: "PostgreSQL backend, real-time features" },
-    { name: "MongoDB", level: 70, description: "Document-based, NoSQL operations" },
+    {
+      name: "SQL/MySQL",
+      level: 75,
+      description:
+        "Queries, relationships, CRUD operations, and database fundamentals",
+    },
+    {
+      name: "PostgreSQL",
+      level: 75,
+      description:
+        "Relational databases, queries, relationships, and application data",
+    },
+    {
+      name: "Supabase",
+      level: 80,
+      description:
+        "PostgreSQL database, authentication, APIs, and real-time features",
+    },
+    {
+      name: "MongoDB",
+      level: 65,
+      description:
+        "Document databases, CRUD operations, and NoSQL fundamentals",
+    },
   ],
 };
+
+
+// ========================================
+// PROJECTS
+// ========================================
 
 export const projects = [
   {
     id: 1,
     name: "SafariTix",
-    shortDescription: "Bus ticketing platform solving Africa's mobility crisis",
-    description: "**Problem:** Manual bus ticketing wastes 2+ hours per transaction, with zero visibility. Travelers risk overbooking, missed schedules, and lost money.\n\n**Solution:** Built a full-stack platform enabling instant digital booking, real-time GPS tracking, and subscription models. Integrated Google Maps API for route visualization and SMS notifications for confirmations.\n\n**Impact:** Reduced booking time from 120 min to 2 minutes. Processed 🔥 20K+ monthly transactions across 50+ bus operators.",
-    problemStatement: "Manual bus ticketing system causes 2+ hours per booking, revenue leakage, and traveler frustration",
-    solution: "Digital platform with real-time tracking, instant booking, and subscription models",
-    results: ["20K+ monthly bookings", "5000+ active users", "2min average booking time", "50+ operator partners"],
-    impact: "Reduced booking friction by 98% | Enabled trusted commerce in transport sector",
-    tech: ["React", "Tailwind CSS", "PHP", "MySQL", "Google Maps API", "Node.js"],
-    image: null,
-    demo: "https://safaritix.vercel.app",
-    github: "https://github.com/Micomyiza-Alexis/safaritix",
+
+    type: "personal",
+    status: "in-progress",
+    year: 2026,
     featured: true,
-    category: "Full-Stack SaaS",
-    highlights: ["Real-time GPS Tracking", "Subscription Management", "Multi-operator Support"]
+
+    category: "Transportation Technology",
+    role: "Founder & Full-Stack Developer",
+
+    shortDescription:
+      "A digital bus ticketing and transportation management platform designed to simplify booking, seat management, and bus operations.",
+
+    description:
+      "SafariTix is a transportation platform concept focused on making bus travel easier to manage digitally. The platform brings together online ticket booking, seat management, bus scheduling, tracking concepts, and tools for transport operators.",
+
+    problemStatement:
+      "Traditional bus ticketing can involve queues, manual processes, limited seat visibility, and poor communication between passengers and transport operators.",
+
+    solution:
+      "Designed and developed a full-stack transportation platform with digital booking, seat management, bus scheduling, operator management, and API-driven architecture.",
+
+    contribution: [
+      "Designed the overall application architecture",
+      "Built the passenger booking experience",
+      "Implemented bus and seat management workflows",
+      "Designed backend API architecture",
+      "Worked on database structure and relationships",
+      "Designed transport operator management features",
+    ],
+
+    results: [
+      "Created a digital bus booking workflow",
+      "Improved visibility of available seats",
+      "Centralized passenger and operator workflows",
+      "Established a foundation for real-time transportation features",
+    ],
+
+    impact:
+      "SafariTix demonstrates my ability to design and build a real-world full-stack product around a practical transportation problem.",
+
+    tech: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Prisma",
+      "Google Maps API",
+    ],
+
+    image: null,
+
+    demo: "https://project-safaritix-transportation.vercel.app/",
+
+    github:
+      "https://github.com/Micomyiza-Alexis/project-safatiTix-developer",
+
+    highlights: [
+      "Online Bus Booking",
+      "Seat Management",
+      "Bus Scheduling",
+      "Operator Management",
+      "REST APIs",
+    ],
   },
+
+
+  // ========================================
+  // RWANDA LEGALCONNECT
+  // ========================================
+
   {
     id: 2,
-    name: "Citizen Engagement System",
-    shortDescription: "Empowering civic participation through digital accountability",
-    description: "**Problem:** Government complaint processes are opaque—citizens file complaints into black holes, never knowing status or resolution.\n\n**Solution:** Built a transparent complaint-tracking platform enabling citizens to submit issues, track real-time progress, and hold authorities accountable. Integrated email notifications and status dashboards.\n\n**Impact:** Transformed complaint resolution from static to 📊 95% resolution rate. Increased civic participation by 300%.",
-    problemStatement: "Complaint management lacks transparency; citizens have no visibility into resolution progress",
-    solution: "Real-time complaint tracking platform with status updates and accountability dashboard",
-    results: ["100+ complaints tracked", "95% resolution rate", "300% increase in civic participation", "Zero abandoned cases"],
-    impact: "Increased government accountability | Empowered 100+ citizens to drive change",
-    tech: ["React", "Tailwind CSS", "Supabase", "PostgreSQL", "JavaScript", "Email APIs"],
-    image: null,
-    demo: "",
-    github: "https://github.com/Micomyiza-Alexis/citizen-engagement",
+    name: "Rwanda LegalConnect",
+
+    type: "contribution",
+    status: "in-progress",
+    year: 2026,
     featured: true,
-    category: "Civic Tech",
-    highlights: ["Real-time Dashboard", "Email Notifications", "Public Accountability"]
+
+    category: "LegalTech",
+    role: "Frontend Developer",
+
+    shortDescription:
+      "A digital legal services platform designed to make legal information and services easier to discover and access.",
+
+    description:
+      "Rwanda LegalConnect is a legal technology platform focused on connecting users with legal information, resources, and services through a modern digital experience.",
+
+    problemStatement:
+      "Finding legal information and navigating legal services can be difficult when resources are scattered across different sources and interfaces.",
+
+    solution:
+      "Contributed to a modern web platform that organizes legal resources, services, and information into an accessible and user-friendly experience.",
+
+    contribution: [
+      "Developed frontend interfaces",
+      "Worked on the Legal Library experience",
+      "Built reusable React components",
+      "Improved responsive layouts",
+      "Integrated frontend interfaces with API data",
+      "Worked on resource and category browsing",
+    ],
+
+    results: [
+      "Improved the legal resource browsing experience",
+      "Created structured Legal Library interfaces",
+      "Added reusable responsive components",
+      "Improved navigation between legal resources",
+    ],
+
+    impact:
+      "Contributed to making legal information easier to discover and interact with through a modern web interface.",
+
+    tech: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "REST APIs",
+      "Git",
+      "GitHub",
+    ],
+
+    image: null,
+
+    demo: "",
+
+    github:
+      "https://github.com/Micomyiza-Alexis",
+
+    highlights: [
+      "Legal Library",
+      "Resource Discovery",
+      "Responsive UI",
+      "API Integration",
+      "Reusable Components",
+    ],
   },
+
+
+  // ========================================
+  // CITIZEN ENGAGEMENT SYSTEM
+  // ========================================
+
   {
     id: 3,
-    name: "Event Management Portal",
-    shortDescription: "End-to-end event lifecycle management from registration to analytics",
-    description: "**Problem:** Event organizers waste 15+ hours on manual registration, ticketing, and attendee tracking across multiple spreadsheets.\n\n**Solution:** Built an all-in-one event portal with automated registration, QR code tickets, real-time check-in, and analytics dashboards.\n\n**Impact:** Reduced event setup time from 8 days to 2 hours. Processed 👥 2000+ attendees for 5+ major events.",
-    problemStatement: "Manual event management across spreadsheets causes data loss, double-bookings, and poor insights",
-    solution: "Automated event platform with registration, ticketing, check-in, and real-time analytics",
-    results: ["2000+ attendees managed", "5+ successful events", "8 days → 2 hours setup time", "+90% attendee satisfaction"],
-    impact: "Eliminated manual event workflows | Scaled to enterprise-level event management",
-    tech: ["React", "Next.js", "Tailwind CSS", "Supabase", "QR Code API", "Chart.js"],
+    name: "Citizen Engagement System",
+
+    type: "academic",
+    status: "completed",
+    year: 2026,
+    featured: false,
+
+    category: "Civic Technology",
+    role: "Full-Stack Developer",
+
+    shortDescription:
+      "A civic platform designed to improve communication between citizens and institutions through structured complaint tracking.",
+
+    description:
+      "A digital civic engagement platform that allows citizens to submit complaints, monitor their status, and follow the progress of issues through a centralized dashboard.",
+
+    problemStatement:
+      "Traditional complaint processes can make it difficult for citizens to know whether their complaints have been received, reviewed, or resolved.",
+
+    solution:
+      "Developed a centralized complaint management system with structured submissions, status tracking, dashboards, and notification workflows.",
+
+    contribution: [
+      "Designed the application interface",
+      "Built complaint submission workflows",
+      "Implemented complaint status tracking",
+      "Created dashboard interfaces",
+      "Worked on database integration",
+      "Implemented notification functionality",
+    ],
+
+    results: [
+      "Created a centralized complaint management workflow",
+      "Improved visibility into complaint status",
+      "Reduced reliance on manual complaint tracking",
+      "Provided a structured communication channel",
+    ],
+
+    impact:
+      "Demonstrates practical experience designing a digital workflow around citizen communication and issue tracking.",
+
+    tech: [
+      "React",
+      "JavaScript",
+      "Tailwind CSS",
+      "Supabase",
+      "PostgreSQL",
+      "Email APIs",
+    ],
+
     image: null,
+
     demo: "",
-    github: "https://github.com/Micomyiza-Alexis/event-portal",
-    featured: true,
+
+    github:
+      "https://github.com/Micomyiza-Alexis/citizen-engagement",
+
+    highlights: [
+      "Complaint Tracking",
+      "Dashboard",
+      "Status Management",
+      "Email Notifications",
+      "Civic Engagement",
+    ],
+  },
+
+
+  // ========================================
+  // EVENT MANAGEMENT PORTAL
+  // ========================================
+
+  {
+    id: 4,
+    name: "Event Management Portal",
+
+    type: "academic",
+    status: "completed",
+    year: 2026,
+    featured: false,
+
     category: "Web Application",
-    highlights: ["Automated Registration", "QR Code Tickets", "Real-time Analytics"]
-  }
+    role: "Full-Stack Developer",
+
+    shortDescription:
+      "An event management platform covering registration, digital tickets, attendee check-in, and event analytics.",
+
+    description:
+      "An end-to-end event management application designed to help organizers manage events, registrations, attendees, digital tickets, check-in, and event information from one platform.",
+
+    problemStatement:
+      "Managing registrations, attendees, tickets, and event information manually can create duplicated data and make event management difficult.",
+
+    solution:
+      "Built a centralized event management platform with registration workflows, digital QR tickets, attendee management, check-in functionality, and analytics interfaces.",
+
+    contribution: [
+      "Designed the event management interface",
+      "Built event registration workflows",
+      "Implemented attendee management",
+      "Worked on QR-based ticket functionality",
+      "Created event analytics interfaces",
+      "Integrated application data with Supabase",
+    ],
+
+    results: [
+      "Centralized event registration and attendee management",
+      "Reduced manual event administration",
+      "Created a digital ticketing workflow",
+      "Provided organizers with event insights",
+    ],
+
+    impact:
+      "Demonstrates experience building a complete web application around event registration and management workflows.",
+
+    tech: [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "Supabase",
+      "QR Code API",
+      "Chart.js",
+    ],
+
+    image: null,
+
+    demo: "",
+
+    github:
+      "https://github.com/Micomyiza-Alexis/event-portal",
+
+    highlights: [
+      "Event Registration",
+      "QR Tickets",
+      "Attendee Management",
+      "Check-in",
+      "Analytics",
+    ],
+  },
+
+
+  // ========================================
+  // OGERA
+  // ========================================
+
+  {
+    id: 5,
+    name: "Ogera",
+
+    type: "professional",
+    status: "in-progress",
+    year: 2026,
+    featured: false,
+
+    category: "Web Platform",
+    role: "Frontend Developer",
+
+    shortDescription:
+      "A modern web platform developed as part of professional software development work.",
+
+    description:
+      "Ogera is a web platform that I contributed to during professional development work, focusing on modern frontend development, reusable components, and API-driven interfaces.",
+
+    problemStatement:
+      "Modern platforms require clean interfaces, responsive experiences, reusable components, and reliable integration between frontend and backend services.",
+
+    solution:
+      "Contributed to the frontend implementation using React and Next.js, reusable components, responsive layouts, and API-driven interfaces.",
+
+    contribution: [
+      "Developed frontend features",
+      "Built and improved reusable UI components",
+      "Worked with API-driven interfaces",
+      "Improved responsive layouts",
+      "Worked with Git and GitHub workflows",
+      "Contributed through feature branches and pull requests",
+    ],
+
+    results: [
+      "Delivered frontend features through Git-based workflows",
+      "Improved reusable component structure",
+      "Built responsive user interfaces",
+      "Gained experience working in a professional development environment",
+    ],
+
+    impact:
+      "Demonstrates practical experience contributing to a professional software development project using team-based Git workflows.",
+
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "REST APIs",
+      "Git",
+      "GitHub",
+    ],
+
+    image: null,
+
+    demo: "",
+
+    github:
+      "https://github.com/SybellaSystems/ogera-frontend",
+
+    highlights: [
+      "Professional Project",
+      "Next.js",
+      "API Integration",
+      "Reusable UI",
+      "GitHub Workflow",
+    ],
+  },
+
+
+  // ========================================
+  // SYBELLA SYSTEMS WEBSITE
+  // ========================================
+
+  {
+    id: 6,
+    name: "Sybella Systems Website",
+
+    type: "professional",
+    status: "live",
+    year: 2026,
+    featured: false,
+
+    category: "Corporate Website",
+    role: "Frontend Developer",
+
+    shortDescription:
+      "A production corporate website with multilingual content, blog management, and administrative publishing functionality.",
+
+    description:
+      "A production corporate website developed with Next.js, including multilingual content, a blog system, administrative interfaces, and API-driven content management functionality.",
+
+    problemStatement:
+      "A growing technology company needs a professional web presence while also giving internal staff the ability to manage and publish website content.",
+
+    solution:
+      "Contributed to the development and improvement of a modern Next.js website with responsive pages, blog functionality, administrative tools, and API-driven content.",
+
+    contribution: [
+      "Worked on the blog experience",
+      "Improved the blog administration interface",
+      "Worked on content publishing workflows",
+      "Debugged API routes and frontend integrations",
+      "Improved responsive UI components",
+      "Worked with Git branches and pull requests",
+    ],
+
+    results: [
+      "Improved the website content management experience",
+      "Implemented blog editing functionality",
+      "Worked with production Next.js builds",
+      "Delivered changes through GitHub pull requests",
+    ],
+
+    impact:
+      "Demonstrates experience working on a real production website and contributing through professional GitHub development workflows.",
+
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "MongoDB",
+      "REST APIs",
+      "Git",
+      "GitHub",
+    ],
+
+    image: null,
+
+    demo: "https://www.sybellasystems.co.rw",
+
+    github:
+      "https://github.com/SybellaSystems/website",
+
+    highlights: [
+      "Production Website",
+      "Blog System",
+      "Admin Dashboard",
+      "Multilingual",
+      "Content Management",
+    ],
+  },
+
+
+  // ========================================
+  // RWANDA LEGALCONNECT BACKEND
+  // ========================================
+
+  {
+    id: 7,
+    name: "Rwanda LegalConnect Backend",
+
+    type: "contribution",
+    status: "in-progress",
+    year: 2026,
+    featured: false,
+
+    category: "Backend API",
+    role: "Backend Developer",
+
+    shortDescription:
+      "Backend services supporting legal resources, categories, and platform data for Rwanda LegalConnect.",
+
+    description:
+      "Backend development work supporting the Rwanda LegalConnect platform, including API-driven access to legal resources and structured platform data.",
+
+    problemStatement:
+      "Frontend applications require reliable APIs and structured data services to provide users with dynamic legal resources and categories.",
+
+    solution:
+      "Worked on backend API functionality and data integration to support the legal platform's frontend experiences.",
+
+    contribution: [
+      "Worked on backend API development",
+      "Integrated resource data with frontend features",
+      "Worked with structured legal resource data",
+      "Debugged API integration issues",
+      "Worked with Git-based development workflows",
+    ],
+
+    results: [
+      "Connected frontend features with backend resources",
+      "Improved dynamic legal resource handling",
+      "Supported the Legal Library experience",
+    ],
+
+    impact:
+      "Demonstrates practical backend development experience supporting a real-world legal technology platform.",
+
+    tech: [
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "PostgreSQL",
+      "REST API",
+      "Git",
+      "GitHub",
+    ],
+
+    image: null,
+
+    demo: "",
+
+    github:
+      "https://github.com/Micomyiza-Alexis",
+
+    highlights: [
+      "REST API",
+      "Backend Development",
+      "Database Integration",
+      "Legal Resources",
+    ],
+  },
 ];
+
+
+// ========================================
+// SIMPLE SKILLS LIST
+// ========================================
 
 export const skills = [
   "HTML",
   "CSS",
   "JavaScript",
   "React.js",
+  "Next.js",
+  "TypeScript",
   "Tailwind CSS",
   "Framer Motion",
+  "Node.js",
+  "Express",
   "PHP",
   "Python",
   "Java",
   "SQL",
-  "Git/GitHub"
+  "PostgreSQL",
+  "Supabase",
+  "MongoDB",
+  "Git/GitHub",
+  "Figma",
 ];
