@@ -19,6 +19,10 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
+  // ========================================
+  // SCROLL + ACTIVE SECTION
+  // ========================================
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
@@ -52,6 +56,44 @@ const Navbar = () => {
     };
   }, []);
 
+  // ========================================
+  // LOCK BODY SCROLL ON MOBILE MENU
+  // ========================================
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  // ========================================
+  // ESCAPE KEY
+  // ========================================
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  // ========================================
+  // NAV CLICK
+  // ========================================
+
   const handleClick = (href) => {
     setMobileOpen(false);
 
@@ -61,27 +103,49 @@ const Navbar = () => {
 
   return (
     <>
-      {/* NAVBAR */}
+      {/* ========================================
+          NAVBAR
+      ======================================== */}
+
       <motion.header
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6"
+        transition={{
+          duration: 0.6,
+          ease: 'easeOut',
+        }}
+        className="fixed inset-x-0 top-0 z-[100] px-3 pt-3 sm:px-6 sm:pt-4"
       >
         <nav
           className={`
             mx-auto max-w-6xl
+            rounded-2xl
+            border
             transition-all duration-500
             ${
-              scrolled
-                ? 'rounded-2xl border border-white/[0.08] bg-[#080b12]/85 shadow-2xl shadow-black/20 backdrop-blur-2xl'
-                : 'rounded-2xl border border-transparent bg-transparent'
+              scrolled || mobileOpen
+                ? `
+                  border-white/[0.09]
+                  bg-[#080b12]/95
+                  shadow-2xl
+                  shadow-black/30
+                  backdrop-blur-2xl
+                `
+                : `
+                  border-transparent
+                  bg-transparent
+                `
             }
           `}
         >
-          <div className="flex h-[68px] items-center justify-between px-4 sm:px-5">
-            
+          {/* ========================================
+              NAVBAR TOP
+          ======================================== */}
+
+          <div className="flex h-[68px] items-center justify-between px-3 sm:px-5">
+
             {/* LOGO */}
+
             <motion.a
               href="#home"
               onClick={() => handleClick('#home')}
@@ -89,8 +153,8 @@ const Navbar = () => {
               whileTap={{ scale: 0.97 }}
               className="group flex items-center gap-3"
             >
-              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-white text-sm font-black text-[#080b12]">
-                <span>MA</span>
+              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-white text-sm font-black text-[#080b12] shadow-lg shadow-white/5">
+                <span className="relative z-10">MA</span>
 
                 <div className="absolute inset-0 -translate-x-full bg-blue-400/40 transition-transform duration-500 group-hover:translate-x-full" />
               </div>
@@ -106,7 +170,10 @@ const Navbar = () => {
               </div>
             </motion.a>
 
-            {/* DESKTOP NAV */}
+            {/* ========================================
+                DESKTOP NAV
+            ======================================== */}
+
             <div className="hidden items-center gap-1 md:flex">
               {navLinks.map((link) => {
                 const id = link.href.replace('#', '');
@@ -117,7 +184,7 @@ const Navbar = () => {
                     key={link.name}
                     href={link.href}
                     onClick={() => handleClick(link.href)}
-                    className="relative rounded-xl px-4 py-2 text-sm font-medium transition-colors"
+                    className="relative rounded-xl px-4 py-2 text-sm font-medium"
                   >
                     {active && (
                       <motion.div
@@ -132,11 +199,14 @@ const Navbar = () => {
                     )}
 
                     <span
-                      className={`relative z-10 transition-colors ${
-                        active
-                          ? 'text-white'
-                          : 'text-gray-500 hover:text-gray-200'
-                      }`}
+                      className={`
+                        relative z-10 transition-colors
+                        ${
+                          active
+                            ? 'text-white'
+                            : 'text-gray-500 hover:text-gray-200'
+                        }
+                      `}
                     >
                       {link.name}
                     </span>
@@ -152,43 +222,102 @@ const Navbar = () => {
               })}
             </div>
 
-            {/* DESKTOP CTA */}
+            {/* ========================================
+                DESKTOP CTA
+            ======================================== */}
+
             <motion.a
               href="#contact"
               onClick={() => handleClick('#contact')}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="group hidden items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-[#080b12] transition hover:bg-blue-50 md:flex"
+              className="
+                group hidden items-center gap-2
+                rounded-xl
+                bg-white
+                px-4 py-2.5
+                text-sm font-bold
+                text-[#080b12]
+                transition
+                hover:bg-blue-50
+                md:flex
+              "
             >
               Let's talk
 
               <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </motion.a>
 
-            {/* MOBILE BUTTON */}
+            {/* ========================================
+                MOBILE MENU BUTTON
+            ======================================== */}
+
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setMobileOpen((value) => !value)}
-              aria-label="Toggle navigation"
+              aria-label={
+                mobileOpen
+                  ? 'Close navigation'
+                  : 'Open navigation'
+              }
               aria-expanded={mobileOpen}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-gray-300 transition hover:bg-white/[0.08] hover:text-white md:hidden"
+              className="
+                flex h-11 w-11
+                items-center justify-center
+                rounded-xl
+                border border-white/[0.1]
+                bg-white/[0.05]
+                text-gray-300
+                shadow-lg shadow-black/10
+                transition
+                hover:bg-white/[0.1]
+                hover:text-white
+                md:hidden
+              "
             >
-              <AnimatePresence mode="wait" initial={false}>
+              <AnimatePresence
+                mode="wait"
+                initial={false}
+              >
                 {mobileOpen ? (
                   <motion.div
                     key="close"
-                    initial={{ opacity: 0, rotate: -90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: 90 }}
+                    initial={{
+                      opacity: 0,
+                      rotate: -90,
+                      scale: 0.8,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      rotate: 0,
+                      scale: 1,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      rotate: 90,
+                      scale: 0.8,
+                    }}
                   >
                     <XMarkIcon className="h-5 w-5" />
                   </motion.div>
                 ) : (
                   <motion.div
                     key="menu"
-                    initial={{ opacity: 0, rotate: 90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: -90 }}
+                    initial={{
+                      opacity: 0,
+                      rotate: 90,
+                      scale: 0.8,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      rotate: 0,
+                      scale: 1,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      rotate: -90,
+                      scale: 0.8,
+                    }}
                   >
                     <Bars3Icon className="h-5 w-5" />
                   </motion.div>
@@ -197,64 +326,151 @@ const Navbar = () => {
             </motion.button>
           </div>
 
-          {/* MOBILE MENU */}
+          {/* ========================================
+              MOBILE MENU
+          ======================================== */}
+
           <AnimatePresence>
             {mobileOpen && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
+                initial={{
+                  opacity: 0,
+                  height: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                  height: 'auto',
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                }}
                 transition={{
                   duration: 0.25,
                   ease: 'easeOut',
                 }}
-                className="overflow-hidden border-t border-white/[0.06] md:hidden"
+                className="
+                  overflow-hidden
+                  border-t border-white/[0.08]
+                  md:hidden
+                "
               >
-                <div className="space-y-1 p-3">
-                  {navLinks.map((link, index) => {
-                    const id = link.href.replace('#', '');
-                    const active = activeSection === id;
+                <motion.div
+                  initial={{ y: -10 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: -10 }}
+                  className="px-3 pb-4 pt-3"
+                >
 
-                    return (
-                      <motion.a
-                        key={link.name}
-                        href={link.href}
-                        onClick={() => handleClick(link.href)}
-                        initial={{
-                          opacity: 0,
-                          x: -10,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          x: 0,
-                        }}
-                        transition={{
-                          delay: index * 0.04,
-                        }}
-                        className={`
-                          flex items-center justify-between
-                          rounded-xl px-4 py-3
-                          text-sm font-medium
-                          transition-all
-                          ${
-                            active
-                              ? 'bg-white/[0.07] text-white'
-                              : 'text-gray-400 hover:bg-white/[0.04] hover:text-white'
+                  {/* MENU LABEL */}
+
+                  <div className="mb-3 flex items-center justify-between px-3">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600">
+                      Navigation
+                    </span>
+
+                    <span className="text-[10px] text-gray-600">
+                      Menu
+                    </span>
+                  </div>
+
+                  {/* LINKS */}
+
+                  <div className="space-y-1">
+                    {navLinks.map((link, index) => {
+                      const id = link.href.replace('#', '');
+                      const active = activeSection === id;
+
+                      return (
+                        <motion.a
+                          key={link.name}
+                          href={link.href}
+                          onClick={() =>
+                            handleClick(link.href)
                           }
-                        `}
-                      >
-                        <span>{link.name}</span>
+                          initial={{
+                            opacity: 0,
+                            x: -15,
+                          }}
+                          animate={{
+                            opacity: 1,
+                            x: 0,
+                          }}
+                          transition={{
+                            delay: index * 0.045,
+                            duration: 0.2,
+                          }}
+                          className={`
+                            group
+                            flex min-h-[50px]
+                            items-center
+                            justify-between
+                            rounded-xl
+                            px-4
+                            text-sm font-medium
+                            transition-all
+                            ${
+                              active
+                                ? `
+                                  border border-blue-400/20
+                                  bg-blue-500/[0.1]
+                                  text-white
+                                `
+                                : `
+                                  border border-transparent
+                                  text-gray-400
+                                  hover:bg-white/[0.05]
+                                  hover:text-white
+                                `
+                            }
+                          `}
+                        >
+                          <div className="flex items-center gap-3">
 
-                        {active && (
-                          <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                        )}
-                      </motion.a>
-                    );
-                  })}
+                            {/* ACTIVE INDICATOR */}
+
+                            <span
+                              className={`
+                                h-1.5 w-1.5 rounded-full
+                                transition-all
+                                ${
+                                  active
+                                    ? 'bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]'
+                                    : 'bg-gray-700 group-hover:bg-gray-400'
+                                }
+                              `}
+                            />
+
+                            <span>{link.name}</span>
+                          </div>
+
+                          <ArrowUpRightIcon
+                            className={`
+                              h-4 w-4
+                              transition-all
+                              ${
+                                active
+                                  ? 'text-blue-400 opacity-100'
+                                  : 'text-gray-600 opacity-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100'
+                              }
+                            `}
+                          />
+                        </motion.a>
+                      );
+                    })}
+                  </div>
+
+                  {/* DIVIDER */}
+
+                  <div className="my-4 h-px bg-white/[0.06]" />
+
+                  {/* CTA */}
 
                   <motion.a
                     href="#contact"
-                    onClick={() => handleClick('#contact')}
+                    onClick={() =>
+                      handleClick('#contact')
+                    }
                     initial={{
                       opacity: 0,
                       y: 10,
@@ -264,19 +480,66 @@ const Navbar = () => {
                       y: 0,
                     }}
                     transition={{
-                      delay: navLinks.length * 0.04,
+                      delay: navLinks.length * 0.045,
                     }}
-                    className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#080b12]"
+                    className="
+                      flex min-h-[52px]
+                      items-center justify-center
+                      gap-2
+                      rounded-xl
+                      bg-white
+                      px-4
+                      text-sm font-bold
+                      text-[#080b12]
+                      shadow-xl shadow-black/20
+                      transition
+                      hover:bg-blue-50
+                    "
                   >
                     Let's talk
+
                     <ArrowUpRightIcon className="h-4 w-4" />
                   </motion.a>
-                </div>
+
+                  {/* SMALL STATUS */}
+
+                  <div className="mt-4 flex items-center justify-center gap-2">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+
+                    <span className="text-[10px] font-medium uppercase tracking-widest text-gray-600">
+                      Available for freelance work
+                    </span>
+                  </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
         </nav>
       </motion.header>
+
+      {/* ========================================
+          MOBILE BACKDROP
+      ======================================== */}
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.button
+            type="button"
+            aria-label="Close navigation"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMobileOpen(false)}
+            className="
+              fixed inset-0
+              z-[90]
+              bg-black/50
+              backdrop-blur-[2px]
+              md:hidden
+            "
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };
