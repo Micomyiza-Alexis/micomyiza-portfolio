@@ -12,7 +12,7 @@ export const personalInfo = {
 
   profilePicture,
 
-  email: "micomyizaa742@gmail.com",
+  email: "lexmico10@gmail.com",
 
   phone: "0793216602",
 
@@ -512,7 +512,7 @@ export const projects = [
 
     image: null,
 
-    demo: "",
+    demo: "https://ogera.sybellasystems.co.rw/",
 
     github:
       "https://github.com/SybellaSystems/ogera-frontend",
@@ -544,10 +544,10 @@ export const projects = [
     role: "Frontend Developer",
 
     shortDescription:
-      "A production corporate website with multilingual content, blog management, and administrative publishing functionality.",
+      "A production corporate website where I contributed to the blog experience and administrative content management features.",
 
     description:
-      "A production corporate website developed with Next.js, including multilingual content, a blog system, administrative interfaces, and API-driven content management functionality.",
+      "A production corporate website developed with Next.js, where I worked on the blog system, administrative interfaces, and API-driven content publishing functionality.",
 
     problemStatement:
       "A growing technology company needs a professional web presence while also giving internal staff the ability to manage and publish website content.",
